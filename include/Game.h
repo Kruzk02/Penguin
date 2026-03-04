@@ -11,6 +11,9 @@ protected:
     int screenWidth = 640;
     int screenHeight = 480;
 
+    float deltaTime = 0;
+    Uint64 lastFrame = 0;
+
     SDL_Window *window = nullptr;
     SDL_Renderer *renderer = nullptr;
 

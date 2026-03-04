@@ -2,6 +2,7 @@
 
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_log.h>
+#include <SDL3/SDL_timer.h>
 
 void Game::run() {
     if (!init()) {
@@ -16,12 +17,21 @@ void Game::run() {
 
     start();
 
+    lastFrame = SDL_GetPerformanceCounter();
+
     while (isRunning) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
                 isRunning = false;
             }
         }
+
+        const Uint64 currentTime = SDL_GetPerformanceCounter();
+        deltaTime = static_cast<float>(currentTime - lastFrame) / static_cast<float>(SDL_GetPerformanceFrequency());
+        lastFrame = currentTime;
+
+        if (deltaTime > 0.1f)
+            deltaTime = 0.1f;
 
         SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
         SDL_RenderClear(renderer);
