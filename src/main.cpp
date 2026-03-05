@@ -6,16 +6,25 @@
 #include "Game.h"
 
 class Game1 : public Game {
-    void start() override {
 
+    SDL_FRect rect{};
+
+    void start() override {
+        rect = { 200, 150, 400, 400};
     }
 
-    void update() override{
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        constexpr SDL_FRect rect = { 200, 150, 400, 300 };
-        SDL_RenderFillRect(renderer, &rect);
+    void update() override {
+        SDL_PumpEvents();
 
-        std::cout << deltaTime << ", ";
+        const bool *state = SDL_GetKeyboardState(nullptr);
+
+        if (state[SDL_SCANCODE_W]) rect.y -= 50.0f * deltaTime;
+        if (state[SDL_SCANCODE_S]) rect.y += 50.0f * deltaTime;
+        if (state[SDL_SCANCODE_A]) rect.x -= 50.0f * deltaTime;
+        if (state[SDL_SCANCODE_D]) rect.x += 50.0f * deltaTime;
+
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderFillRect(renderer, &rect);
     }
 };
 
