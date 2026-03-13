@@ -3,6 +3,7 @@
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_log.h>
 #include <SDL3/SDL_timer.h>
+#include <SDL3/SDL_video.h>
 
 void Game::run() {
     if (!init()) {
@@ -30,8 +31,7 @@ void Game::run() {
         deltaTime = static_cast<float>(currentTime - lastFrame) / static_cast<float>(SDL_GetPerformanceFrequency());
         lastFrame = currentTime;
 
-        if (deltaTime > 0.1f)
-            deltaTime = 0.1f;
+        if (deltaTime > 0.1f) deltaTime = 0.1f;
 
         SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
         SDL_RenderClear(renderer);
@@ -50,8 +50,8 @@ bool Game::init() {
         return false;
     }
 
-    if (window = SDL_CreateWindow("Penguin", screenWidth, screenHeight, 0); window == nullptr) {
-        SDL_Log( "Window could not be created! SDL error: %s\n", SDL_GetError() );
+    if (window = SDL_CreateWindow("Penguin", screenWidth, screenHeight, SDL_WINDOW_RESIZABLE); window == nullptr) {
+        SDL_Log("Window could not be created! SDL error: %s\n", SDL_GetError());
         return false;
     }
 
