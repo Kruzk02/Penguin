@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_log.h>
 #include <SDL3/SDL_timer.h>
@@ -24,6 +25,11 @@ void Game::run() {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
                 isRunning = false;
+            }
+
+            if (e.type == SDL_EVENT_WINDOW_RESIZED) {
+                screenWidth = e.window.data1;
+                screenHeight = e.window.data2;
             }
         }
 

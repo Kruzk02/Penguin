@@ -4,6 +4,7 @@ project(penguin)
 find_package(SDL3 REQUIRED)
 
 set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
 link_directories(include)
 
